@@ -1,23 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import { Routes, Route, Navigate } from "react-router-dom";
+import { useState } from "react";
+import useIsMobile from "./hooks/useIsMobile";
+import Sidebar from "./components/sideBar";
+import DashBoard from "./pages/dashboard";
+import ManageJobs from "./pages/manageJobs";
+import BottomNav from "./components/bottomNav";
+import PostJob from "./pages/postJob";
+import Profile from "./pages/profile";
+import CompanySettings from "./pages/settings";
+import ViewDetails from "./components/viewDetails";
 
 function App() {
+  const [activePage, setActivePage] = useState("Dashboard");
+  const isMobile = useIsMobile();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="flex h-screen relative">
+      {!isMobile && <Sidebar setActivePage={setActivePage} />}
+
+      <div className={`flex-1 p-6 ${!isMobile ? "ml-64" : ""}`}>
+        {" "}
+        <Routes>
+          <Route path="/" element={<Navigate to="/dashboard" />} />
+          <Route path="/dashboard" element={<DashBoard />} />
+          <Route path="/post-job" element={<PostJob />} />
+          <Route path="/manage-jobs" element={<ManageJobs />} />
+          <Route path="/manage-jobs/job-details/1" element={<ViewDetails />} />
+          <Route path="/profile" element={<Profile />} />
+          {/* <Route path="/settings" element={<CompanySettings />} /> */}
+        </Routes>
+      </div>
+      {isMobile && <BottomNav setActivePage={setActivePage} />}
     </div>
   );
 }
