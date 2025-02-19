@@ -30,7 +30,7 @@ const BottomNav = ({ setActivePage }) => {
   ];
 
   return (
-    <nav className="fixed h-16 z-50 bottom-0 w-full bg-white border-t border-gray-200 px-2">
+    <nav className="fixed  min-h-14 max-h-16 z-50 bottom-0 w-full bg-white border-t border-gray-200 px-2">
       <div className="max-w-lg mx-auto h-full">
         <div className="flex justify-around items-center h-full">
           {navItems.map((item) => {
@@ -40,7 +40,7 @@ const BottomNav = ({ setActivePage }) => {
                 key={item.name}
                 as={Link}
                 to={item.path}
-                onClick={() => setActivePage(item.name)}
+                onPress={() => setActivePage(item.name)}
                 className={`flex flex-col items-center min-w-[4.5rem] h-14 gap-1 p-2 rounded-lg transition-all
                   ${
                     isActive

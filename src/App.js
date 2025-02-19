@@ -18,7 +18,9 @@ function App() {
     <div className="flex h-screen relative">
       {!isMobile && <Sidebar setActivePage={setActivePage} />}
 
-      <div className={`flex-1 p-6 ${!isMobile ? "ml-64" : ""}`}>
+      <div
+        className={`flex-1 p-4 md:p-6 mb-32 ${!isMobile ? "ml-64" : "pb-28"}`}
+      >
         {" "}
         <Routes>
           <Route path="/" element={<Navigate to="/dashboard" />} />

@@ -7,32 +7,21 @@ import {
   CardHeader,
   Chip,
   Divider,
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-  Table,
-  TableBody,
-  TableCell,
-  TableColumn,
-  TableHeader,
-  TableRow,
-  User,
 } from "@nextui-org/react";
 import {
   AlertCircle,
   CheckCircle2,
   ChevronLeft,
   Clock,
-  Eye,
-  Mail,
-  UserCheck,
   Users,
-  UserX,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import ApplicantsTable from "./applicantsTable";
+import useIsMobile from "../hooks/useIsMobile";
 
 const ViewDetails = () => {
   const Navigate = useNavigate();
+  const isMobile = useIsMobile();
   const jobDetails = {
     id: "JOB123",
     title: "Senior Software Engineer",
@@ -118,20 +107,21 @@ const ViewDetails = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto p-6 space-y-6">
+    <div className="max-w-7xl mx-auto  space-y-6">
       {/* Header Section */}
-      <Button
-        isIconOnly
-        variant="ghost"
-        radius="full"
-        size="sm"
-        onPress={() => Navigate(-1)}
-      >
-        <ChevronLeft className="w-4 h-4" />
-      </Button>
+
       <div className="flex justify-between items-start">
         <div className="space-y-2">
           <div className="flex items-center gap-3">
+            <Button
+              isIconOnly
+              variant="ghost"
+              radius="full"
+              size="sm"
+              onPress={() => Navigate(-1)}
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </Button>
             <h1 className="text-2xl font-bold">{jobDetails.title}</h1>
             <Chip color="success" variant="flat">
               {jobDetails.status}
@@ -240,147 +230,7 @@ const ViewDetails = () => {
               <h2 className="text-xl font-semibold">Recent Applicants</h2>
             </CardHeader>
             <CardBody>
-              <Table aria-label="Applicants table">
-                <TableHeader>
-                  <TableColumn>APPLICANT</TableColumn>
-                  <TableColumn>APPLIED</TableColumn>
-                  <TableColumn>EXPERIENCE</TableColumn>
-                  <TableColumn>STATUS</TableColumn>
-                  <TableColumn>ACTIONS</TableColumn>
-                </TableHeader>
-                <TableBody>
-                  {applicants.map((applicant) => (
-                    <TableRow key={applicant.id}>
-                      <TableCell>
-                        <User
-                          name={applicant.name}
-                          description={applicant.email}
-                          avatarProps={{
-                            src: applicant.avatar,
-                            radius: "lg",
-                          }}
-                        />
-                      </TableCell>
-                      <TableCell>
-                        {new Date(applicant.appliedDate).toLocaleDateString()}
-                      </TableCell>
-                      <TableCell>{applicant.experience}</TableCell>
-                      <TableCell>
-                        <Chip
-                          size="sm"
-                          color={statusColorMap[applicant.status]}
-                          variant="flat"
-                        >
-                          {applicant.status}
-                        </Chip>
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex gap-2">
-                          <Popover
-                            placement="left"
-                            showArrow={true}
-                            offset={10}
-                            trigger="hover"
-                          >
-                            <PopoverTrigger>
-                              <Button isIconOnly variant="light" size="sm">
-                                <Eye className="w-4 h-4" />
-                              </Button>
-                            </PopoverTrigger>
-                            <PopoverContent>
-                              <div className="w-80 p-4">
-                                <div className="flex gap-4 items-start mb-4">
-                                  <img
-                                    src={applicant.avatar}
-                                    alt={`${applicant.name} profile`}
-                                    className="w-16 h-16 rounded-md object-cover"
-                                  />
-                                  <div>
-                                    <h3 className="text-lg font-semibold">
-                                      {applicant.name}
-                                    </h3>
-                                    <p className="text-sm text-gray-500">
-                                      {applicant.email}
-                                    </p>
-                                    <p className="text-xs text-gray-500">
-                                      {applicant.phone}
-                                    </p>
-                                    <p className="text-xs text-gray-500">
-                                      {applicant.location}
-                                    </p>
-                                  </div>
-                                </div>
-                                <Divider className="my-2" />
-                                <div className="my-2">
-                                  <p className="text-sm font-medium">
-                                    Experience
-                                  </p>
-                                  <p className="text-sm">
-                                    {applicant.experience}
-                                  </p>
-                                </div>
-                                <div className="my-2">
-                                  <p className="text-sm font-medium">
-                                    Education
-                                  </p>
-                                  <p className="text-sm">
-                                    {applicant.education}
-                                  </p>
-                                </div>
-                                <div className="my-2">
-                                  <p className="text-sm font-medium">Skills</p>
-                                  <div className="flex flex-wrap gap-1 mt-1">
-                                    {applicant.skills.map((skill, index) => (
-                                      <Chip
-                                        key={index}
-                                        size="sm"
-                                        variant="flat"
-                                      >
-                                        {skill}
-                                      </Chip>
-                                    ))}
-                                  </div>
-                                </div>
-                                <div className="my-2">
-                                  <p className="text-sm font-medium">Summary</p>
-                                  <p className="text-sm">{applicant.summary}</p>
-                                </div>
-                                <div className="mt-4">
-                                  <Chip
-                                    color={statusColorMap[applicant.status]}
-                                    variant="flat"
-                                  >
-                                    {applicant.status}
-                                  </Chip>
-                                </div>
-                              </div>
-                            </PopoverContent>
-                          </Popover>
-                          <Button isIconOnly variant="light" size="sm">
-                            <Mail className="w-4 h-4" />
-                          </Button>
-                          <Button
-                            isIconOnly
-                            variant="light"
-                            size="sm"
-                            color="success"
-                          >
-                            <UserCheck className="w-4 h-4" />
-                          </Button>
-                          <Button
-                            isIconOnly
-                            variant="light"
-                            size="sm"
-                            color="danger"
-                          >
-                            <UserX className="w-4 h-4" />
-                          </Button>
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+              <ApplicantsTable applicants={applicants} isMobile={isMobile} />
             </CardBody>
           </Card>
         </div>

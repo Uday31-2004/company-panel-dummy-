@@ -77,24 +77,24 @@ const ManageJobs = () => {
   };
 
   return (
-    <div className="p-4 md:p-6 max-w-7xl mx-auto space-y-4 md:space-y-6 mb-16">
+    <div className="px-2 md:px-6 pb-20 w-full max-w-full overflow-hidden min-h-screen space-y-4 md:space-y-6">
       {/* Header Section */}
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-3 mt-3">
         <div className="flex justify-between items-center">
-          <h1 className="text-xl md:text-2xl font-bold">Manage Jobs</h1>
+          <h1 className="text-lg md:text-2xl font-bold">Manage Jobs</h1>
           <Button
             as={Link}
             to="/post-job"
             color="primary"
-            startContent={<Plus size={16} />}
+            startContent={<Plus size={isMobile ? 14 : 16} />}
             size={isMobile ? "sm" : "md"}
           >
-            Post New Job
+            {isMobile ? "New Job" : "Post New Job"}
           </Button>
         </div>
 
         {/* Filters and Search */}
-        <div className="flex flex-col sm:flex-row gap-4">
+        <div className="flex flex-col sm:flex-row gap-3">
           <Input
             placeholder="Search jobs..."
             startContent={<Search size={16} className="text-default-400" />}
@@ -104,33 +104,34 @@ const ManageJobs = () => {
           <div className="flex gap-2">
             <ButtonGroup>
               <Button
-                startContent={<Filter size={16} />}
+                startContent={<Filter size={isMobile ? 14 : 16} />}
                 variant="flat"
                 size={isMobile ? "sm" : "md"}
               >
-                Filter
+                {isMobile ? "Filter" : "Filter"}
               </Button>
               <Button
-                startContent={<RefreshCcw size={16} />}
+                startContent={<RefreshCcw size={isMobile ? 14 : 16} />}
                 variant="flat"
                 size={isMobile ? "sm" : "md"}
               >
-                Reset
+                {isMobile ? "Reset" : "Reset"}
               </Button>
             </ButtonGroup>
           </div>
         </div>
       </div>
-      {/* Jobs Table */}
-      <JobsTable
-        jobs={jobs}
-        isMobile={isMobile}
-        handleAction={handleAction}
-      />{" "}
+
+      {/* Jobs Table - Wrapped in overflow container */}
+      <div className="w-full max-w-full overflow-x-hidden">
+        <JobsTable
+          jobs={jobs}
+          isMobile={isMobile}
+          handleAction={handleAction}
+        />
+      </div>
     </div>
   );
 };
-
-///
 
 export default ManageJobs;

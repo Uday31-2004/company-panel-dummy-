@@ -82,7 +82,7 @@ export default function Profile() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto p-6 space-y-6">
+    <div className="max-w-7xl  p-[-2] md:p-6 space-y-6">
       {/* Header Card */}
       <Card className="w-full">
         <CardBody className="relative">
